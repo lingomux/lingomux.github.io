@@ -4,127 +4,302 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#07110f">
-    <meta name="description" content="LingoMux creates translated subtitle tracks that stay synchronized with video.">
+    <meta name="description" content="LingoMux adds a translated subtitle as a selectable video track, then verifies the finished media.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="LingoMux">
-    <meta property="og:description" content="Add the subtitle track your video is missing.">
+    <meta property="og:title" content="LingoMux | Selectable translated subtitles">
+    <meta property="og:description" content="Build the subtitle track your video is missing, with inspectable translation and media checks.">
     <meta property="og:url" content="https://lingomux.github.io/">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://lingomux.github.io/assets/lingomux-social.png">
+    <meta property="og:image:alt" content="LingoMux, selectable translated subtitles">
+    <meta property="og:image:width" content="1730">
+    <meta property="og:image:height" content="909">
+    <meta name="twitter:card" content="summary_large_image">
     <title>LingoMux | Selectable translated subtitles</title>
     <link rel="canonical" href="https://lingomux.github.io/">
     <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/site.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="site-header">
-      <a class="brand" href="/" aria-label="LingoMux home">
-        <span class="brand-mark" aria-hidden="true">LM</span>
-        LingoMux
-      </a>
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#workflow">Workflow</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="https://github.com/lingomux/lingomux">GitHub</a>
-      </nav>
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="LingoMux home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>LingoMux</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#workflow">Workflow</a>
+          <a href="#cli">CLI</a>
+          <a href="#quality">Quality</a>
+          <a href="#roadmap">Roadmap</a>
+        </nav>
+        <a class="header-link" href="https://github.com/lingomux/lingomux">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
     </header>
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Local-first subtitle tooling</p>
-          <h1 id="hero-title">Add the subtitle track your video is missing.</h1>
-          <p>LingoMux inspects existing tracks, finds the best source, translates with context, checks synchronization, and adds a selectable language track without encoding the original video or audio.</p>
+          <div class="status-chip"><span></span> Pre-alpha · embedded text path available</div>
+          <h1 id="hero-title">The missing subtitle, added as a real track.</h1>
+          <p class="hero-lede">LingoMux takes an existing text subtitle, translates it with scene context, adds it beside the original tracks, and checks the finished media. Persian is the first target profile.</p>
           <div class="actions">
-            <a class="button button-primary" href="https://github.com/lingomux/lingomux">View the source</a>
-            <a class="button button-secondary" href="#workflow">Read the workflow</a>
+            <a class="button button-primary" href="#quick-start">Run the current path</a>
+            <a class="button button-secondary" href="https://github.com/lingomux/lingomux">Read the source</a>
           </div>
+          <p class="hero-note">Local media stays local. Provider calls require an explicit flag.</p>
         </div>
 
-        <div class="terminal" aria-label="Planned LingoMux command output">
-          <div class="terminal-bar">
-            <span>lingomux</span>
-            <span>planned interface</span>
+        <div class="hero-demo" aria-label="LingoMux command result">
+          <div class="window-bar">
+            <span class="window-title">terminal / lingomux</span>
+            <span class="window-state">verified run</span>
           </div>
-          <pre><span class="dim">$</span> lingomux plan film.mkv --to fa
+          <pre><code><span class="prompt">$</span> uv run lingomux run film.mkv \
+  --from en --to fa \
+  --title Persian \
+  --model MODEL_NAME \
+  --allow-network \
+  --output film.fa.mkv
 
-<span class="dim">source</span>    embedded English subtitles
-<span class="dim">timing</span>    trusted
-<span class="dim">target</span>    Persian (fa)
-<span class="dim">video</span>     stream copy
-<span class="dim">audio</span>     stream copy
-<span class="dim">output</span>    film.fa.mkv
-
-<span class="signal">ready for review</span></pre>
+<span class="key">media</span>       film.fa.mkv
+<span class="key">subtitle</span>    film.fa.srt
+<span class="key">manifest</span>    film.fa.lingomux.json
+<span class="key">integrity</span>   0 warnings
+<span class="key">hashes</span>      2 media streams
+<span class="pass">result      passed</span></code></pre>
         </div>
+      </section>
+
+      <section class="proof-strip" aria-label="Current project facts">
+        <div><strong>10</strong><span>stage and pipeline commands</span></div>
+        <div><strong>Copy</strong><span>original video and audio streams</span></div>
+        <div><strong>BCP 47</strong><span>language tags in the document model</span></div>
+        <div><strong>Local first</strong><span>no analytics or hosted provider by default</span></div>
       </section>
 
       <section class="section" id="workflow" aria-labelledby="workflow-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Workflow</p>
-            <h2 id="workflow-title">Use the strongest evidence first.</h2>
+            <p class="eyebrow">Current workflow</p>
+            <h2 id="workflow-title">Evidence before automation.</h2>
           </div>
-          <p>Existing subtitle timing is usually more valuable than another transcription pass. LingoMux chooses a source based on what the media already contains, then records every transformation in a resumable job manifest.</p>
+          <p>LingoMux reuses a trustworthy embedded text track before creating new timing. Every stage can run alone, and the working path can run as one recorded job.</p>
         </div>
 
-        <ol class="pipeline">
-          <li>
-            <h3>Inspect</h3>
-            <p>List audio, subtitle, chapter, and attachment streams before making a plan.</p>
-          </li>
-          <li>
-            <h3>Select</h3>
-            <p>Reuse embedded text, check a permitted provider, or transcribe the selected audio.</p>
-          </li>
-          <li>
-            <h3>Synchronize</h3>
-            <p>Measure offset, drift, speech overlap, and release mismatches.</p>
-          </li>
-          <li>
-            <h3>Translate</h3>
-            <p>Translate scene-sized context with stable cue IDs and a user glossary.</p>
-          </li>
-          <li>
-            <h3>Validate</h3>
-            <p>Check timing, reading speed, language rules, names, and untranslated fragments.</p>
-          </li>
-          <li>
-            <h3>Mux and verify</h3>
-            <p>Add a selectable track, retain original streams, and inspect the finished container.</p>
-          </li>
-        </ol>
+        <div class="flow" aria-label="Embedded text subtitle workflow">
+          <article>
+            <span>01</span>
+            <div><h3>Inspect</h3><p>Read streams, chapters, codecs, language tags, and track flags.</p></div>
+          </article>
+          <article>
+            <span>02</span>
+            <div><h3>Select</h3><p>Prefer a known source-language text subtitle already inside the media.</p></div>
+          </article>
+          <article>
+            <span>03</span>
+            <div><h3>Translate</h3><p>Send scene-sized cue groups with nearby dialogue and a glossary.</p></div>
+          </article>
+          <article>
+            <span>04</span>
+            <div><h3>Check text</h3><p>Compare cue IDs, timing, numbers, glossary choices, and language rules.</p></div>
+          </article>
+          <article>
+            <span>05</span>
+            <div><h3>Mux</h3><p>Add a titled Matroska subtitle track without encoding video or audio.</p></div>
+          </article>
+          <article>
+            <span>06</span>
+            <div><h3>Verify</h3><p>Reopen the file, round-trip the subtitle, hash packets, and decode media.</p></div>
+          </article>
+        </div>
+
+        <div class="planned-branch">
+          <span>When no text source exists</span>
+          <p>Speech recognition, permitted subtitle-provider search, and image subtitle OCR remain planned paths. The site does not present them as shipped.</p>
+        </div>
       </section>
 
-      <section class="section" aria-labelledby="principles-title">
+      <section class="section command-section" id="cli" aria-labelledby="cli-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Design principles</p>
-            <h2 id="principles-title">Media changes should be explicit.</h2>
+            <p class="eyebrow">CLI examples</p>
+            <h2 id="cli-title">Plan it. Run it. Prove it.</h2>
           </div>
-          <p>The tool is designed around inspectable plans and typed pipeline stages. Translation providers and speech models can change without controlling paths, timestamps, or media commands.</p>
+          <p>The same core supports a one-command job and separate stage commands. Start with a plan when you need to inspect the selected source and media behavior.</p>
         </div>
 
-        <div class="feature-grid">
-          <article class="feature">
-            <code>01 / selectable</code>
-            <h3>Soft subtitles by default</h3>
-            <p>Matroska is the first output target. Burned-in subtitles remain an explicit export option.</p>
+        <div class="command-workbench" id="quick-start">
+          <div class="command-tabs" role="tablist" aria-label="Command examples">
+            <button type="button" role="tab" aria-selected="true" aria-controls="panel-plan" id="tab-plan" data-command-tab="plan">Plan</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-run" id="tab-run" data-command-tab="run">Run</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-verify" id="tab-verify" data-command-tab="verify">Verify</button>
+          </div>
+
+          <section class="command-panel is-active" id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" data-command-panel="plan">
+            <div class="command-copy">
+              <p class="eyebrow">Read-only decision</p>
+              <h3>See the selected source before changing a file.</h3>
+              <p>The plan shows each stage, flags provider access, and reports if a missing stage prevents the run.</p>
+              <ul class="check-list">
+                <li>No file writes</li>
+                <li>No provider calls</li>
+                <li>No media encoding</li>
+              </ul>
+            </div>
+            <div class="code-shell">
+              <button class="copy-button" type="button" data-copy-target="code-plan">Copy</button>
+              <pre id="code-plan"><code>uv run lingomux plan film.mkv \
+  --from en \
+  --to fa</code></pre>
+            </div>
+          </section>
+
+          <section class="command-panel" id="panel-run" role="tabpanel" aria-labelledby="tab-run" data-command-panel="run">
+            <div class="command-copy">
+              <p class="eyebrow">Recorded pipeline</p>
+              <h3>Create the selectable track and its audit record.</h3>
+              <p>The command writes a new MKV, an editable SRT sidecar, and a versioned JSON manifest.</p>
+              <ul class="check-list">
+                <li>Scene context and glossary</li>
+                <li>Temporary sibling outputs</li>
+                <li>Verification before final move</li>
+              </ul>
+            </div>
+            <div class="code-shell">
+              <button class="copy-button" type="button" data-copy-target="code-run">Copy</button>
+              <pre id="code-run"><code>uv run lingomux run film.mkv \
+  --from en --to fa \
+  --title Persian \
+  --model MODEL_NAME \
+  --glossary glossary.json \
+  --allow-network \
+  --output film.fa.mkv</code></pre>
+            </div>
+          </section>
+
+          <section class="command-panel" id="panel-verify" role="tabpanel" aria-labelledby="tab-verify" data-command-panel="verify">
+            <div class="command-copy">
+              <p class="eyebrow">Independent proof</p>
+              <h3>Check a finished container again.</h3>
+              <p>Verification can compare the translated sidecar, packet hashes for original media, and a decoded sample.</p>
+              <ul class="check-list">
+                <li>Stream and chapter inventory</li>
+                <li>Track language and title</li>
+                <li>Subtitle round trip</li>
+              </ul>
+            </div>
+            <div class="code-shell">
+              <button class="copy-button" type="button" data-copy-target="code-verify">Copy</button>
+              <pre id="code-verify"><code>uv run lingomux verify \
+  film.mkv film.fa.mkv \
+  --language fa \
+  --title Persian \
+  --subtitle film.fa.srt \
+  --hash-media</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="shipping-title">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Scope</p>
+            <h2 id="shipping-title">Clear about what ships.</h2>
+          </div>
+          <p>The current path is useful for media that already contains a text subtitle. The planned paths extend that foundation without weakening its checks.</p>
+        </div>
+
+        <div class="scope-table-wrap">
+          <table class="scope-table">
+            <thead><tr><th>Capability</th><th>Today</th><th>Next step</th></tr></thead>
+            <tbody>
+              <tr><th>Subtitle source</th><td><span class="scope-state available">Available</span> Embedded text or supplied SRT</td><td>Local speech recognition</td></tr>
+              <tr><th>Translation</th><td><span class="scope-state available">Available</span> Ollama adapter</td><td>Local and hosted provider adapters</td></tr>
+              <tr><th>Synchronization</th><td><span class="scope-state available">Available</span> Reference text offset and rate</td><td>Audio anchors and internal cuts</td></tr>
+              <tr><th>Packaging</th><td><span class="scope-state available">Available</span> SRT into Matroska</td><td>WebVTT, ASS, and MP4</td></tr>
+              <tr><th>Review</th><td><span class="scope-state available">Available</span> Reports and sidecars</td><td>Waveform and video review app</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="quality" aria-labelledby="quality-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Translation quality</p>
+            <h2 id="quality-title">Context helps. Checks keep it honest.</h2>
+          </div>
+          <p>A fluent sentence can still lose a name, number, cue, or timing boundary. LingoMux separates contextual translation from deterministic source-to-target checks.</p>
+        </div>
+
+        <div class="quality-layout">
+          <article class="quality-story">
+            <span class="quality-index">A / translate</span>
+            <h3>Dialogue is sent in scene-sized groups.</h3>
+            <p>The provider receives stable cue IDs, nearby dialogue, the requested register, and preferred glossary terms. It never controls timestamps or paths.</p>
+            <div class="context-row" aria-label="Translation context fields">
+              <span>cue IDs</span><span>dialogue</span><span>register</span><span>glossary</span>
+            </div>
           </article>
-          <article class="feature">
-            <code>02 / local</code>
-            <h3>Network access stays opt-in</h3>
-            <p>Local processing is preferred. A plan shows what would leave the computer before any remote request.</p>
+          <article class="quality-story quality-checks">
+            <span class="quality-index">B / compare</span>
+            <h3>Clear factual changes block the output.</h3>
+            <ul>
+              <li>Missing, unexpected, or reordered cue IDs</li>
+              <li>Changed cue timing or numeric values</li>
+              <li>Missing target values from an explicit glossary</li>
+              <li>Unchanged source text and repeated output warnings</li>
+            </ul>
           </article>
-          <article class="feature">
-            <code>03 / contextual</code>
-            <h3>Translation sees the scene</h3>
-            <p>Character names, register, nearby dialogue, and glossary terms inform translation before cue fitting.</p>
-          </article>
-          <article class="feature">
-            <code>04 / verified</code>
-            <h3>The output is checked</h3>
-            <p>Stream inventory, subtitle metadata, cue timing, and decode errors are checked after muxing.</p>
-          </article>
+        </div>
+
+        <div class="persian-example">
+          <div>
+            <p class="eyebrow">Persian profile</p>
+            <h3>Right-to-left text stays in logical Unicode order.</h3>
+            <p>The language checks cover Persian Yeh and Kaf, ZWNJ placement, bidi controls, NFC text, line length, and reading speed.</p>
+          </div>
+          <div class="subtitle-frame">
+            <span>00:14:08,220 → 00:14:10,900</span>
+            <p lang="fa" dir="rtl">کاپیتان، ۱۲٫۵ ثانیه صبر کن.</p>
+            <small>Captain, wait 12.5 seconds.</small>
+          </div>
+        </div>
+
+        <p class="human-note"><strong>Automation has a boundary.</strong> A fluent speaker still needs to review publication-ready Persian while watching the scene.</p>
+      </section>
+
+      <section class="section verification-section" aria-labelledby="verification-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Media verification</p>
+            <h2 id="verification-title">A new track should not disturb the old ones.</h2>
+          </div>
+          <p>The mux stage maps every original stream and uses stream copy. The verification stage then compares what went in with what came out.</p>
+        </div>
+
+        <div class="verification-grid">
+          <div class="verification-list">
+            <article><span>01</span><h3>Inventory</h3><p>Original stream count, order, codec, language, title, and flags.</p></article>
+            <article><span>02</span><h3>Subtitle</h3><p>New track metadata plus extracted text and timing against the SRT.</p></article>
+            <article><span>03</span><h3>Packets</h3><p>Optional SHA-256 packet hashes for each original video and audio stream.</p></article>
+            <article><span>04</span><h3>Decode</h3><p>FFmpeg decodes a requested sample of the finished audio and video.</p></article>
+          </div>
+          <div class="manifest-card">
+            <div class="window-bar"><span>film.fa.lingomux.json</span><span>schema 2</span></div>
+            <pre><code>{
+  <span class="json-key">"status"</span>: <span class="json-string">"complete"</span>,
+  <span class="json-key">"source_kind"</span>: <span class="json-string">"embedded-text"</span>,
+  <span class="json-key">"source_stream_index"</span>: 2,
+  <span class="json-key">"target_language"</span>: <span class="json-string">"fa"</span>,
+  <span class="json-key">"translation_error_count"</span>: 0,
+  <span class="json-key">"lint_error_count"</span>: 0
+}</code></pre>
+            <p>The manifest stores hashes and provider metadata, not subtitle text, glossary contents, request bodies, or credentials.</p>
+          </div>
         </div>
       </section>
 
@@ -132,41 +307,60 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Roadmap</p>
-            <h2 id="roadmap-title">Start with a trustworthy media path.</h2>
+            <h2 id="roadmap-title">Build outward from a tested media path.</h2>
           </div>
-          <p>Persian is the first target language because it exposes right-to-left rendering, Unicode normalization, and translation-quality problems that generic subtitle wrappers often ignore.</p>
+          <p>The project starts with embedded text because it provides the strongest timing evidence. Audio generation and subtitle acquisition come next, followed by review tooling and more formats.</p>
         </div>
 
-        <div class="roadmap">
-          <article>
-            <h3>First release</h3>
-            <p>Inspect media, extract text subtitles, validate Persian cues, add a selectable MKV track, and verify stream preservation.</p>
-          </article>
-          <article>
-            <h3>Next</h3>
-            <p>Add contextual translation providers, local speech recognition, global offset correction, and drift detection.</p>
-          </article>
-          <article>
-            <h3>Later</h3>
-            <p>Add provider search, piecewise alignment, image-subtitle OCR, and a desktop review application.</p>
-          </article>
+        <ol class="roadmap-list">
+          <li class="current"><span>Now</span><div><h3>Embedded text pipeline</h3><p>Inspection, extraction, contextual translation, integrity checks, Persian lint, Matroska muxing, verification, and a job manifest.</p></div></li>
+          <li><span>Next</span><div><h3>Audio and source acquisition</h3><p>Local speech recognition, word alignment, opt-in provider search, stronger synchronization, and target cue fitting.</p></div></li>
+          <li><span>Later</span><div><h3>Review and delivery</h3><p>Waveform review, locked edits, OCR, WebVTT, ASS, MP4 packaging, and library integrations.</p></div></li>
+        </ol>
+      </section>
+
+      <section class="section faq-section" aria-labelledby="faq-title">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Questions</p>
+            <h2 id="faq-title">Before you run it.</h2>
+          </div>
+        </div>
+        <div class="faq-list">
+          <details><summary>Does LingoMux overwrite the source video?</summary><p>No. The source path cannot be the output path. New media is written to a temporary sibling, verified, then moved to the requested destination.</p></details>
+          <details><summary>Does it burn text into the picture?</summary><p>No. The current muxer adds a selectable Matroska subtitle track and copies the existing video and audio streams.</p></details>
+          <details><summary>Can it create subtitles when none exist?</summary><p>Not yet. Local speech recognition is the next major source path. The current one-command run requires an embedded text subtitle.</p></details>
+          <details><summary>Does an automatic check guarantee a good translation?</summary><p>No. It can catch structural and factual problems, but dialogue choices, humor, register, and cultural adaptation still need a fluent reviewer.</p></details>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="status-title">
-        <div class="status">
-          <div>
-            <h2 id="status-title">The project is under active development.</h2>
-            <p>The command interface shown here is the planned first release. Follow the repository for implementation progress and early test builds.</p>
+      <section class="section cta-section" aria-labelledby="cta-title">
+        <div class="cta-panel">
+          <p class="eyebrow">Open development</p>
+          <h2 id="cta-title">Inspect the current pipeline.</h2>
+          <p>The repository contains the CLI, generated media tests, architecture notes, command examples, and the research behind the roadmap.</p>
+          <div class="actions">
+            <a class="button button-primary" href="https://github.com/lingomux/lingomux">Open the repository</a>
+            <a class="button button-secondary" href="https://github.com/lingomux/lingomux/blob/main/docs/research.md">Read the research</a>
           </div>
-          <span class="status-label">status / pre-alpha</span>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p>LingoMux is open source. This site uses no analytics.</p>
-      <a href="https://github.com/lingomux">GitHub organization</a>
+      <div>
+        <a class="brand footer-brand" href="/" aria-label="LingoMux home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>LingoMux</span>
+        </a>
+        <p>Selectable translated subtitles with an inspectable media path.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/lingomux">Organization</a>
+        <a href="https://github.com/lingomux/lingomux">Source</a>
+        <a href="https://github.com/lingomux/.github/blob/main/SECURITY.md">Security</a>
+      </div>
+      <p class="footer-meta">No analytics. No external fonts.</p>
     </footer>
   </body>
 </html>

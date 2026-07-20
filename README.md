@@ -2,7 +2,7 @@
 
 This repository contains the public website for [LingoMux](https://github.com/lingomux/lingomux).
 
-The site is plain HTML and CSS. It has no runtime dependencies, analytics, or external font requests.
+The site uses plain HTML, CSS, and a small script for command tabs and copy buttons. It has no runtime dependencies, analytics, or external font requests. The social card is stored with the site assets.
 
 ## Local preview
 
@@ -13,6 +13,8 @@ python -m http.server 8000
 ```
 
 Open `http://localhost:8000` in a browser.
+
+Check the desktop and mobile layouts, command tabs, keyboard focus, copy buttons, local links, and browser console before publishing.
 
 ## Publishing
 

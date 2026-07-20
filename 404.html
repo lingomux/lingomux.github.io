@@ -9,21 +9,24 @@
     <link rel="stylesheet" href="/assets/styles.css">
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="LingoMux home">
-        <span class="brand-mark" aria-hidden="true">LM</span>
-        LingoMux
-      </a>
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="LingoMux home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>LingoMux</span>
+        </a>
+        <span></span>
+        <a class="header-link" href="https://github.com/lingomux">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
     </header>
     <main id="main">
-      <section class="hero" aria-labelledby="error-title">
+      <section class="hero error-hero" aria-labelledby="error-title">
         <div class="hero-copy">
-          <p class="eyebrow">404 / not found</p>
-          <h1 id="error-title">This track does not exist.</h1>
-          <p>The requested page may have moved or may not have been published yet.</p>
-          <div class="actions">
-            <a class="button button-primary" href="/">Return home</a>
-          </div>
+          <p class="eyebrow">404 / missing track</p>
+          <h1 id="error-title">This page is not in the container.</h1>
+          <p class="hero-lede">The address may have changed, or the page has not been published.</p>
+          <div class="actions"><a class="button button-primary" href="/">Return home</a></div>
         </div>
       </section>
     </main>
