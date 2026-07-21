@@ -31,6 +31,7 @@
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
         <nav class="site-nav" id="primary-navigation" aria-label="Primary navigation">
           <a href="#workflow">Workflow</a>
+          <a href="#studio">Studio</a>
           <a href="#cli">CLI</a>
           <a href="#quality">Quality</a>
           <a href="#roadmap">Roadmap</a>
@@ -120,6 +121,46 @@
         <div class="planned-branch">
           <span>When no text source exists</span>
           <p>Installed Whisper, faster-whisper, and WhisperX can create timed text from audio. OpenSubtitles search needs an API key and explicit network consent. Tesseract OCR can convert supported bitmap tracks. Each path keeps confidence or timing evidence for review.</p>
+        </div>
+      </section>
+
+      <section class="section studio-section" id="studio" aria-labelledby="studio-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Local Studio</p>
+            <h2 id="studio-title">Every command, presented as a guided form.</h2>
+          </div>
+          <p>Studio runs on the user's computer and builds its forms from the current CLI schema. It shows the exact shell command before starting a job.</p>
+        </div>
+
+        <div class="studio-layout">
+          <div class="studio-copy">
+            <article><span>01</span><div><h3>Choose a workspace</h3><p>File browsing stays inside one selected directory. Inputs and outputs are checked before a command starts.</p></div></article>
+            <article><span>02</span><div><h3>Use detected tools</h3><p>The interface reports FFmpeg, Whisper, faster-whisper, WhisperX, Tesseract, and provider readiness.</p></div></article>
+            <article><span>03</span><div><h3>Review each action</h3><p>Network calls, model downloads, overwrites, browser launches, and in-place edits need direct confirmation.</p></div></article>
+            <article><span>04</span><div><h3>Keep the command</h3><p>Copy the PowerShell, Command Prompt, or POSIX form when the terminal is the faster path.</p></div></article>
+          </div>
+
+          <div class="studio-window" aria-label="Example LingoMux Studio transcription form">
+            <div class="window-bar"><span class="window-title">LingoMux Studio</span><span class="window-state">local session</span></div>
+            <div class="studio-window-body">
+              <div class="studio-sidebar" aria-hidden="true">
+                <strong>Workspace</strong><span class="active">Home</span><span>Tools</span><span>Jobs</span>
+              </div>
+              <div class="studio-form">
+                <p class="eyebrow">Speech to subtitle</p>
+                <h3>Create timed text with faster-whisper</h3>
+                <label>Video or audio <span>episode-01.mkv</span></label>
+                <label>Output subtitle <span>episode-01.fa.srt</span></label>
+                <div class="studio-form-row">
+                  <label>Model <span>large-v3</span></label>
+                  <label>Language <span>fa</span></label>
+                </div>
+                <pre><code>lingomux transcribe-fast episode-01.mkv --output episode-01.fa.srt</code></pre>
+                <button type="button" tabindex="-1">Run locally</button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
