@@ -7,6 +7,8 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 HTML_FILES = (ROOT / "index.html", ROOT / "404.html")
+TEXT_FILES = (*HTML_FILES, ROOT / "assets" / "styles.css", ROOT / "assets" / "site.js")
+BROKEN_TEXT_MARKERS = ("Â", "Ã", "â", "Ø", "Ù", "Ú", "Û", "\ufffd")
 
 
 class SiteParser(HTMLParser):
@@ -28,12 +30,24 @@ class SiteParser(HTMLParser):
 
 
 def main() -> None:
+    for path in TEXT_FILES:
+        check_text(path)
     for path in HTML_FILES:
         check_html(path)
     for path in (ROOT / "assets").iterdir():
         if path.is_file() and path.stat().st_size == 0:
             raise RuntimeError(f"Empty site asset: {path.relative_to(ROOT)}")
     print("Site check passed")
+
+
+def check_text(path: Path) -> None:
+    content = path.read_text(encoding="utf-8")
+    markers = [marker for marker in BROKEN_TEXT_MARKERS if marker in content]
+    if markers:
+        shown = ", ".join(repr(marker) for marker in markers)
+        raise RuntimeError(f"Broken text marker in {path.relative_to(ROOT)}: {shown}")
+    if "\u2014" in content or "\u2013" in content:
+        raise RuntimeError(f"Restricted dash character in {path.relative_to(ROOT)}")
 
 
 def check_html(path: Path) -> None:

@@ -6,7 +6,7 @@ The implementation repository is private during pre-alpha development. The websi
 the current command surface, its external requirements, and known limits without presenting the
 private source as publicly available.
 
-The site uses plain HTML and CSS. A small script handles mobile navigation and command controls. It has no runtime dependencies, analytics, or external font requests. The social card is stored with the site assets. The Studio section reflects the local interface shipped in the private implementation repository.
+The site uses plain HTML and CSS. A small script handles mobile navigation and command controls. It has no runtime dependencies, analytics, or external font requests. The social card is stored with the site assets. The Studio and phone-control sections reflect the local interfaces shipped in the private implementation repository. Acquisition examples cover hash-first provider matching, checked ZIP members, and optional audio synchronization.
 
 ## Local preview
 
@@ -27,7 +27,7 @@ python scripts/check_site.py
 node --check assets/site.js
 ```
 
-The Python check rejects missing local files, broken page anchors, duplicate element IDs, and invalid `aria-controls` targets.
+The Python check rejects missing local files, broken page anchors, duplicate element IDs, invalid `aria-controls` targets, broken encoding markers, and restricted dash characters.
 
 ## Publishing
 
