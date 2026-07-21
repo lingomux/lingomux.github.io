@@ -1,8 +1,12 @@
 # LingoMux website
 
-This repository contains the public website for [LingoMux](https://github.com/lingomux/lingomux).
+This repository contains the public website for the [LingoMux organization](https://github.com/lingomux).
 
-The site uses plain HTML, CSS, and a small script for command tabs and copy buttons. It has no runtime dependencies, analytics, or external font requests. The social card is stored with the site assets.
+The implementation repository is private during pre-alpha development. The website describes
+the current command surface, its external requirements, and known limits without presenting the
+private source as publicly available.
+
+The site uses plain HTML and CSS. A small script handles mobile navigation and command controls. It has no runtime dependencies, analytics, or external font requests. The social card is stored with the site assets.
 
 ## Local preview
 

@@ -28,27 +28,29 @@
           <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
           <span>LingoMux</span>
         </a>
-        <nav class="site-nav" aria-label="Primary navigation">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
+        <nav class="site-nav" id="primary-navigation" aria-label="Primary navigation">
           <a href="#workflow">Workflow</a>
           <a href="#cli">CLI</a>
           <a href="#quality">Quality</a>
           <a href="#roadmap">Roadmap</a>
+          <a class="nav-org-link" href="https://github.com/lingomux">Organization</a>
         </nav>
-        <a class="header-link" href="https://github.com/lingomux/lingomux">GitHub <span aria-hidden="true">↗</span></a>
+        <a class="header-link" href="https://github.com/lingomux">Organization</a>
       </div>
     </header>
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div class="status-chip"><span></span> Pre-alpha · embedded text path available</div>
+          <div class="status-chip"><span></span> Pre-alpha · active development snapshot</div>
           <h1 id="hero-title">The missing subtitle, added as a real track.</h1>
-          <p class="hero-lede">LingoMux takes an existing text subtitle, translates it with scene context, adds it beside the original tracks, and checks the finished media. Persian is the first target profile.</p>
+          <p class="hero-lede">LingoMux can start from embedded text, local speech recognition, a permitted provider match, or bitmap subtitle OCR. It translates with scene context, packages the result, and checks the finished media. Persian is the first target profile.</p>
           <div class="actions">
-            <a class="button button-primary" href="#quick-start">Run the current path</a>
-            <a class="button button-secondary" href="https://github.com/lingomux/lingomux">Read the source</a>
+            <a class="button button-primary" href="#quick-start">Explore the current path</a>
+            <a class="button button-secondary" href="#roadmap">View project status</a>
           </div>
-          <p class="hero-note">Local media stays local. Provider calls require an explicit flag.</p>
+          <p class="hero-note">Local media stays local. Provider calls require explicit consent. Source access is private during pre-alpha development.</p>
         </div>
 
         <div class="hero-demo" aria-label="LingoMux command result">
@@ -73,7 +75,7 @@
       </section>
 
       <section class="proof-strip" aria-label="Current project facts">
-        <div><strong>10</strong><span>stage and pipeline commands</span></div>
+        <div><strong>24</strong><span>CLI commands in the current snapshot</span></div>
         <div><strong>Copy</strong><span>original video and audio streams</span></div>
         <div><strong>BCP 47</strong><span>language tags in the document model</span></div>
         <div><strong>Local first</strong><span>no analytics or hosted provider by default</span></div>
@@ -85,7 +87,7 @@
             <p class="eyebrow">Current workflow</p>
             <h2 id="workflow-title">Evidence before automation.</h2>
           </div>
-          <p>LingoMux reuses a trustworthy embedded text track before creating new timing. Every stage can run alone, and the working path can run as one recorded job.</p>
+          <p>LingoMux starts with the strongest available source evidence. Every stage can run alone, and the embedded text or audio path can run as one recorded job.</p>
         </div>
 
         <div class="flow" aria-label="Embedded text subtitle workflow">
@@ -95,7 +97,7 @@
           </article>
           <article>
             <span>02</span>
-            <div><h3>Select</h3><p>Prefer a known source-language text subtitle already inside the media.</p></div>
+            <div><h3>Select</h3><p>Choose embedded text, supplied SRT, installed speech recognition, a provider match, or bitmap OCR.</p></div>
           </article>
           <article>
             <span>03</span>
@@ -117,7 +119,7 @@
 
         <div class="planned-branch">
           <span>When no text source exists</span>
-          <p>Speech recognition, permitted subtitle-provider search, and image subtitle OCR remain planned paths. The site does not present them as shipped.</p>
+          <p>Installed Whisper, faster-whisper, and WhisperX can create timed text from audio. OpenSubtitles search needs an API key and explicit network consent. Tesseract OCR can convert supported bitmap tracks. Each path keeps confidence or timing evidence for review.</p>
         </div>
       </section>
 
@@ -209,18 +211,18 @@
             <p class="eyebrow">Scope</p>
             <h2 id="shipping-title">Clear about what ships.</h2>
           </div>
-          <p>The current path is useful for media that already contains a text subtitle. The planned paths extend that foundation without weakening its checks.</p>
+          <p>The current snapshot covers text, audio, provider, and bitmap source paths. External tools and credentials remain explicit requirements.</p>
         </div>
 
         <div class="scope-table-wrap">
           <table class="scope-table">
-            <thead><tr><th>Capability</th><th>Today</th><th>Next step</th></tr></thead>
+            <thead><tr><th>Capability</th><th>Today</th><th>Requirement or limit</th></tr></thead>
             <tbody>
-              <tr><th>Subtitle source</th><td><span class="scope-state available">Available</span> Embedded text or supplied SRT</td><td>Local speech recognition</td></tr>
-              <tr><th>Translation</th><td><span class="scope-state available">Available</span> Ollama adapter</td><td>Local and hosted provider adapters</td></tr>
-              <tr><th>Synchronization</th><td><span class="scope-state available">Available</span> Reference text offset and rate</td><td>Audio anchors and internal cuts</td></tr>
-              <tr><th>Packaging</th><td><span class="scope-state available">Available</span> SRT into Matroska</td><td>WebVTT, ASS, and MP4</td></tr>
-              <tr><th>Review</th><td><span class="scope-state available">Available</span> Reports and sidecars</td><td>Waveform and video review app</td></tr>
+              <tr><th>Subtitle source</th><td><span class="scope-state available">Available</span> Embedded text, supplied SRT, speech recognition, OpenSubtitles, or bitmap OCR</td><td>Installed model or OCR tools; provider access needs a user API key</td></tr>
+              <tr><th>Translation</th><td><span class="scope-state available">Available</span> Scene-batched Ollama adapter with glossary input</td><td>Installed Ollama model and explicit provider consent</td></tr>
+              <tr><th>Synchronization</th><td><span class="scope-state available">Available</span> Reference offset and rate, plus coarse audio activity matching</td><td>Audio matching estimates one global offset and can reject weak evidence</td></tr>
+              <tr><th>Packaging</th><td><span class="scope-state available">Available</span> Selectable MKV, MP4, M4V, and MOV tracks; checked hard-sub output</td><td>FFmpeg is required; hard-sub styling needs libass</td></tr>
+              <tr><th>Review</th><td><span class="scope-state available">Available</span> Local video and SRT editor with search, issue checks, and RTL input</td><td>The loopback editor writes SRT and does not yet show a waveform</td></tr>
             </tbody>
           </table>
         </div>
@@ -289,7 +291,7 @@
             <article><span>04</span><h3>Decode</h3><p>FFmpeg decodes a requested sample of the finished audio and video.</p></article>
           </div>
           <div class="manifest-card">
-            <div class="window-bar"><span>film.fa.lingomux.json</span><span>schema 2</span></div>
+            <div class="window-bar"><span>film.fa.lingomux.json</span><span>schema 3</span></div>
             <pre><code>{
   <span class="json-key">"status"</span>: <span class="json-string">"complete"</span>,
   <span class="json-key">"source_kind"</span>: <span class="json-string">"embedded-text"</span>,
@@ -309,13 +311,13 @@
             <p class="eyebrow">Roadmap</p>
             <h2 id="roadmap-title">Build outward from a tested media path.</h2>
           </div>
-          <p>The project starts with embedded text because it provides the strongest timing evidence. Audio generation and subtitle acquisition come next, followed by review tooling and more formats.</p>
+          <p>The project now has working text, speech, provider, OCR, synchronization, review, and packaging paths. The next work deepens evidence, recovery, and human review.</p>
         </div>
 
         <ol class="roadmap-list">
-          <li class="current"><span>Now</span><div><h3>Embedded text pipeline</h3><p>Inspection, extraction, contextual translation, integrity checks, Persian lint, Matroska muxing, verification, and a job manifest.</p></div></li>
-          <li><span>Next</span><div><h3>Audio and source acquisition</h3><p>Local speech recognition, word alignment, opt-in provider search, stronger synchronization, and target cue fitting.</p></div></li>
-          <li><span>Later</span><div><h3>Review and delivery</h3><p>Waveform review, locked edits, OCR, WebVTT, ASS, MP4 packaging, and library integrations.</p></div></li>
+          <li class="current"><span>Now</span><div><h3>Multiple source paths</h3><p>Embedded text, local speech recognition, opt-in provider search, bitmap OCR, contextual translation, review, packaging, verification, and job records.</p></div></li>
+          <li><span>Next</span><div><h3>Evidence and recovery</h3><p>Word anchors, piecewise synchronization, resumable stages, OCR image review, cue locks, and saved approvals.</p></div></li>
+          <li><span>Later</span><div><h3>Benchmarks and distribution</h3><p>Licensed language benchmarks, player rendering results, performance tracking, public releases, and easier installation.</p></div></li>
         </ol>
       </section>
 
@@ -328,20 +330,20 @@
         </div>
         <div class="faq-list">
           <details><summary>Does LingoMux overwrite the source video?</summary><p>No. The source path cannot be the output path. New media is written to a temporary sibling, verified, then moved to the requested destination.</p></details>
-          <details><summary>Does it burn text into the picture?</summary><p>No. The current muxer adds a selectable Matroska subtitle track and copies the existing video and audio streams.</p></details>
-          <details><summary>Can it create subtitles when none exist?</summary><p>Not yet. Local speech recognition is the next major source path. The current one-command run requires an embedded text subtitle.</p></details>
+          <details><summary>Does it burn text into the picture?</summary><p>It can. The <code>burn</code> command creates checked H.264 or H.265 hard-sub output. The <code>mux</code> command instead adds a selectable track and keeps the original video and audio streams under stream copy.</p></details>
+          <details><summary>Can it create subtitles when none exist?</summary><p>Yes, through installed Whisper, faster-whisper, or WhisperX. Supported bitmap subtitle tracks can also be converted with Tesseract. These paths still need human review.</p></details>
           <details><summary>Does an automatic check guarantee a good translation?</summary><p>No. It can catch structural and factual problems, but dialogue choices, humor, register, and cultural adaptation still need a fluent reviewer.</p></details>
         </div>
       </section>
 
       <section class="section cta-section" aria-labelledby="cta-title">
         <div class="cta-panel">
-          <p class="eyebrow">Open development</p>
-          <h2 id="cta-title">Inspect the current pipeline.</h2>
-          <p>The repository contains the CLI, generated media tests, architecture notes, command examples, and the research behind the roadmap.</p>
+          <p class="eyebrow">Private pre-alpha</p>
+          <h2 id="cta-title">Follow the public development snapshot.</h2>
+          <p>The implementation repository is private during pre-alpha development. This site reports the current commands, dependencies, and limits without offering public source access.</p>
           <div class="actions">
-            <a class="button button-primary" href="https://github.com/lingomux/lingomux">Open the repository</a>
-            <a class="button button-secondary" href="https://github.com/lingomux/lingomux/blob/main/docs/research.md">Read the research</a>
+            <a class="button button-primary" href="#cli">Review command examples</a>
+            <a class="button button-secondary" href="https://github.com/lingomux">View the organization</a>
           </div>
         </div>
       </section>
@@ -357,7 +359,7 @@
       </div>
       <div class="footer-links">
         <a href="https://github.com/lingomux">Organization</a>
-        <a href="https://github.com/lingomux/lingomux">Source</a>
+        <a href="#roadmap">Project status</a>
         <a href="https://github.com/lingomux/.github/blob/main/SECURITY.md">Security</a>
       </div>
       <p class="footer-meta">No analytics. No external fonts.</p>

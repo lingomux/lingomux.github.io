@@ -1,3 +1,30 @@
+document.documentElement.classList.add("has-js");
+
+const navToggle = document.querySelector(".nav-toggle");
+const primaryNavigation = document.getElementById("primary-navigation");
+
+function setNavigationOpen(open) {
+  if (!navToggle || !primaryNavigation) return;
+  navToggle.setAttribute("aria-expanded", String(open));
+  primaryNavigation.classList.toggle("is-open", open);
+}
+
+if (navToggle && primaryNavigation) {
+  navToggle.addEventListener("click", () => {
+    setNavigationOpen(navToggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  for (const link of primaryNavigation.querySelectorAll("a")) {
+    link.addEventListener("click", () => setNavigationOpen(false));
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || navToggle.getAttribute("aria-expanded") !== "true") return;
+    setNavigationOpen(false);
+    navToggle.focus();
+  });
+}
+
 const tabs = Array.from(document.querySelectorAll("[data-command-tab]"));
 const panels = Array.from(document.querySelectorAll("[data-command-panel]"));
 
