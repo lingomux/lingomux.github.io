@@ -178,6 +178,7 @@
             <button type="button" role="tab" aria-selected="true" aria-controls="panel-plan" id="tab-plan" data-command-tab="plan">Plan</button>
             <button type="button" role="tab" aria-selected="false" aria-controls="panel-run" id="tab-run" data-command-tab="run">Run</button>
             <button type="button" role="tab" aria-selected="false" aria-controls="panel-verify" id="tab-verify" data-command-tab="verify">Verify</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-studio" id="tab-studio" data-command-tab="studio">Studio</button>
           </div>
 
           <section class="command-panel is-active" id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" data-command-panel="plan">
@@ -241,6 +242,23 @@
   --title Persian \
   --subtitle film.fa.srt \
   --hash-media</code></pre>
+            </div>
+          </section>
+
+          <section class="command-panel" id="panel-studio" role="tabpanel" aria-labelledby="tab-studio" data-command-panel="studio">
+            <div class="command-copy">
+              <p class="eyebrow">Local interface</p>
+              <h3>Open the same command surface in a browser.</h3>
+              <p>Choose a workspace once, inspect detected tools, then use guided forms for transcription, translation, styling, muxing, and verification.</p>
+              <ul class="check-list">
+                <li>Loopback address only</li>
+                <li>Workspace-bounded file access</li>
+                <li>Copyable shell commands</li>
+              </ul>
+            </div>
+            <div class="code-shell">
+              <button class="copy-button" type="button" data-copy-target="code-studio">Copy</button>
+              <pre id="code-studio"><code>lingomux ui --workspace "C:\Videos"</code></pre>
             </div>
           </section>
         </div>
